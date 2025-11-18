@@ -1,7 +1,6 @@
 package com.spedizioni.repositories;
 
 import com.spedizioni.constants.DBConfig;
-import com.spedizioni.models.Articolo;
 import com.spedizioni.models.Ordine;
 
 import java.sql.*;
