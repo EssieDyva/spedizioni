@@ -1,6 +1,6 @@
 CREATE DATABASE spedizioni;
 
-USE DATABASE spedizioni;
+USE spedizioni;
 
 CREATE TABLE ARTICOLO(
     ID_ARTICOLO INT NOT NULL AUTO_INCREMENT,
@@ -84,3 +84,7 @@ VALUES
 (8, 5, 1),
 (8, 3, 1),
 (9, 5, 6);
+
+SELECT o.ID_ORDINE, o.NUMERO, o.DATA_ORDINE, a.PESO * v.QUANTITA AS peso_totale FROM ordine o
+LEFT JOIN voce v ON v.ID_ORDINE = o.ID_ORDINE
+LEFT JOIN articolo a ON a.ID_ARTICOLO = v.ID_ARTICOLO
