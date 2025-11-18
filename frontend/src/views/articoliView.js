@@ -22,15 +22,47 @@ class ArticoliView {
                     <header>
                         <h1>Esame Spedizioni</h1>
                         <nav>
+                            <a href="/" data-nav="">
+                                Home
+                            </a>
                             <a href="/articoli" data-nav="articoli">
                                 Articoli
                             </a>
+                            <a href="/ordini" data-nav="ordini">
+                                Ordini
+                            </a>
+                            <a href="/voci" data-nav="voci">
+                                Voci
+                            </a>
+                            <a href="/tariffe" data-nav="tariffe">
+                                Tariffe Corrieri
+                            </a>
                         </nav>
                     </header>
-    
+
                     <main>
                         <div>
                             <h2>Articoli</h2>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Codice</th>
+                                        <th>Descrizione</th>
+                                        <th>Peso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${this.articoli.map(articolo => `
+                                        <tr>
+                                            <td>${articolo.idArticolo}</td>
+                                            <td>${articolo.codice}</td>
+                                            <td>${articolo.descrizione}</td>
+                                            <td>${articolo.peso}</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
                         </div>
                     </main>
                 </div>
@@ -38,18 +70,12 @@ class ArticoliView {
     }
 
     bindEvents() {
-        // Navigation events
         document.querySelectorAll('[data-nav]').forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 const path = e.target.getAttribute('data-nav');
                 router.navigate(`/${path}`);
             });
-        });
-
-        // Refresh button
-        document.querySelector('[data-action="refresh"]').addEventListener('click', () => {
-            this.loadPeople();
         });
     }
 
@@ -58,15 +84,14 @@ class ArticoliView {
         this.render(false);
 
         try {
-            this.articoli = await api.getPeople();
+            this.articoli = await api.getArticoli();
         } catch (error) {
-            console.error('Error loading:', error);
+            console.error('Error loading articoli:', error);
         } finally {
             this.loading = false;
             this.render(false);
         }
     }
-
-
 }
+
 export default ArticoliView
