@@ -13,4 +13,7 @@ public class Ordine implements Serializable {
     private Long idOrdine;
     private int numero;
     private String data;
+    private double costo;
+    private String nomeCorriere;
+    private String nomeTariffa;
 }// end model

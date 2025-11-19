@@ -1,28 +1,28 @@
 import api from "../api/api";
 import router from "../routers/router";
 
-class ArticoliView {
+class OrdiniView {
     constructor() {
         this.container = document.getElementById('app');
-        this.articoli = [];
+        this.ordini = [];
         this.loading = false;
     }
 
-    async render(loadArticoli = true) {
+    async render(loadOrdini = true) {
         this.container.innerHTML = this.getTemplate();
         this.bindEvents();
-        if (loadArticoli) {
-            await this.loadArticoli();
+        if (loadOrdini) {
+            await this.loadOrdini();
         }
     }
 
     getTemplate() {
         return `
-                <div id="pagina" class="articoli">
+                <div id="pagina" class="ordini">
                     <header>
                         <h1>Esame Spedizioni</h1>
                         <nav>
-                            <a href="/articoli" data-nav="articoli">
+                            <a href="/ordini" data-nav="articoli">
                                 Articoli
                             </a>
                             <a href="/ordini" data-nav="ordini">
@@ -36,23 +36,23 @@ class ArticoliView {
 
                     <main>
                         <div class="tabella">
-                            <h2>Articoli</h2>
+                            <h2>Ordini</h2>
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>ID Articolo</th>
-                                        <th>Codice</th>
-                                        <th>Descrizione</th>
-                                        <th>Peso</th>
+                                        <th>ID Ordine</th>
+                                        <th>Numero</th>
+                                        <th>Data</th>
+                                        <th>Tariffa migliore</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    ${this.articoli.map(articolo => `
+                                    ${this.ordini.map(ordine => `
                                         <tr>
-                                            <td>${articolo.idArticolo}</td>
-                                            <td>${articolo.codice}</td>
-                                            <td>${articolo.descrizione}</td>
-                                            <td>${articolo.peso}</td>
+                                            <td>${ordine.idOrdine}</td>
+                                            <td>${ordine.numero}</td>
+                                            <td>${ordine.data}</td>
+                                            <td>${ordine.costo + ' (' + ordine.nomeCorriere + ' ' + ordine.nomeTariffa + ')'}</td>
                                         </tr>
                                     `).join('')}
                                 </tbody>
@@ -73,14 +73,14 @@ class ArticoliView {
         });
     }
 
-    async loadArticoli() {
+    async loadOrdini() {
         this.loading = true;
         this.render(false);
 
         try {
-            this.articoli = await api.getArticoli();
+            this.ordini = await api.getOrdini();
         } catch (error) {
-            console.error('Error loading articoli:', error);
+            console.error('Error loading ordini:', error);
         } finally {
             this.loading = false;
             this.render(false);
@@ -88,4 +88,4 @@ class ArticoliView {
     }
 }
 
-export default ArticoliView
+export default OrdiniView

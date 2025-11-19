@@ -34,6 +34,15 @@ class Api {
         }
     }
 
+    async addTariffaCorriere(payload) {
+        try {
+            const response = await axiosApi.post("/api/tariffecorrieri/add", payload)
+            return response.data
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
     async getVoci() {
         try {
             const response = await axiosApi.get('/api/voci/all')
@@ -44,15 +53,6 @@ class Api {
             throw new Error(error.message)
         }
     }
-    
-    /* async addPerson(personData) {
-        try {
-            const response = await axiosApi.post('/people', personData);
-            return response.data;
-        } catch (error) {
-            this.handleApiError(error);
-        }
-    } */
 }
 
 const api = new Api();

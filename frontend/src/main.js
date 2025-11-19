@@ -1,11 +1,14 @@
 import './style.css';
 import router from './routers/router.js'
 import ArticoliView from './views/articoliView.js';
+import OrdiniView from './views/ordiniView.js';
+import TariffeCorrieriView from './views/tariffeCorrieriView.js';
 
-// Initialize the application
 class App {
     constructor() {
-        this.articoliView = new ArticoliView();
+        this.articoliView = new ArticoliView()
+        this.ordiniView = new OrdiniView()
+        this.tariffeCorrieriView = new TariffeCorrieriView()
         this.setupRoutes();
     }
 
@@ -15,9 +18,19 @@ class App {
           this.articoliView.render()
         })
 
-        // Handle root path - redirect to people list
+        router.addRoute('ordini', () => {
+          console.log('Navigating to ordini view')
+          this.ordiniView.render()
+        })
+
+        router.addRoute('tariffeCorrieri', () => {
+          console.log('Navigating to tariffe corrieri view')
+          this.tariffeCorrieriView.render()
+        })
+
+
         router.addRoute('', () => {
-            console.log('Root path, redirecting to people list');
+            console.log('Root path, redirecting to articoli');
             router.navigate('/articoli');
         });
     }
@@ -27,11 +40,9 @@ class App {
     }
 }
 
-// Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     const app = new App();
     app.init();
 });
 
-// Export for potential external use
 export default App;

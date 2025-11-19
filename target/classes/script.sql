@@ -84,21 +84,3 @@ VALUES
 (8, 5, 1),
 (8, 3, 1),
 (9, 5, 6);
-
-SELECT o.*, t.COSTO
-FROM ordine o
-JOIN (
-    SELECT o2.ID_ORDINE AS ordine_id,
-        SUM(a.PESO * v.QUANTITA) AS PESO_TOTALE
-    FROM ordine o2
-    JOIN voce v ON o2.ID_ORDINE = v.ID_ORDINE
-    JOIN articolo a ON v.ID_ARTICOLO = a.ID_ARTICOLO
-    GROUP BY o2.ID_ORDINE
-) AS w ON w.ordine_id = o.ID_ORDINE
-JOIN tariffa_corriere tc
-    ON tc.PESO_MASSIMO >= w.PESO_TOTALE
-WHERE tc.COSTO = (
-    SELECT MIN(tc2.COSTO)
-    FROM tariffa_corriere tc2
-    WHERE tc2.PESO_MASSIMO >= w.PESO_TOTALE
-);
