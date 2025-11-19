@@ -70,7 +70,7 @@ public class TariffaCorriereRepository {
         int righeCancellate = 0;
         try {
             conn = DriverManager.getConnection(DBConfig.URL, DBConfig.USER, DBConfig.PPW);
-            String query = "DELETE FROM tariffa_corriere WHERE id = ?";
+            String query = "DELETE FROM tariffa_corriere WHERE ID_TARIFFA_CORRIERE = ?";
             comando = conn.prepareStatement(query);
             comando.setLong(1, id);
             righeCancellate = comando.executeUpdate();

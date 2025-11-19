@@ -43,6 +43,15 @@ class Api {
         }
     }
 
+    async deleteTariffaCorriere(id) {
+        try {
+            const response = await axiosApi.delete(`/api/tariffecorrieri/${id}`)
+            return response.data
+        } catch (error) {
+            throw new Error(error.message)
+        }
+    }
+
     async getVoci() {
         try {
             const response = await axiosApi.get('/api/voci/all')

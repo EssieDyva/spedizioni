@@ -51,16 +51,20 @@ class TariffeCorrieriView {
                                         <th>Nome Tariffa</th>
                                         <th>Peso Massimo</th>
                                         <th>Costo</th>
+                                        <th>Operazioni</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     ${this.tariffeCorrieri.map(tariffaCorriere => `
                                         <tr>
-                                            <td>${tariffaCorriere.idTariffaCorriere}</td>
+                                            <td id="id">${tariffaCorriere.idTariffaCorriere}</td>
                                             <td>${tariffaCorriere.nomeCorriere}</td>
                                             <td>${tariffaCorriere.nomeTariffa}</td>
                                             <td>${tariffaCorriere.pesoMassimo}</td>
                                             <td>${tariffaCorriere.costo}</td>
+                                            <td>
+                                                <button type="submit" id="deleteButton" value="${tariffaCorriere.idTariffaCorriere}">Elimina</button>
+                                            </td>
                                         </tr>
                                     `).join('')}
                                 </tbody>
@@ -95,17 +99,25 @@ class TariffeCorrieriView {
     bindEvents() {
         document.querySelectorAll('[data-nav]').forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const path = e.target.getAttribute('data-nav');
-                router.navigate(`/${path}`);
-            });
-        });
+                e.preventDefault()
+                const path = e.target.getAttribute('data-nav')
+                router.navigate(`/${path}`)
+            })
+        })
+
+        // stavo provando a settare la delete lato frontend, non riuscendoci
+        document.querySelectorAll('tr').forEach(riga => {
+            riga.addEventListener('submit', (e) => {
+                e.preventDefault
+                this.deleteRow(riga)
+            })
+        })
 
         const form = document.getElementById('addForm');
         form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            this.handleSubmit();
-        });
+            e.preventDefault()
+            this.handleSubmit()
+        })
     }
 
     async loadTariffeCorrieri() {
@@ -127,6 +139,14 @@ class TariffeCorrieriView {
             console.log(this.formData)
             const nuovaTariffa = await api.addTariffaCorriere(this.formData);
             console.log(nuovaTariffa)
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
+
+    async deleteRow() {
+        try {
+            const response = await api.deleteTariffaCorriere(tariffaCorriere.idTariffaCorriere)
         } catch (error) {
             throw new Error(error)
         }

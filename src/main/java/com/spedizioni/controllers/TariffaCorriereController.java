@@ -26,7 +26,7 @@ public class TariffaCorriereController {
     }// end function
 
     @DeleteMapping("/{id}")
-    public void cancellaTariffa(Long id) throws SQLException {
+    public void cancellaTariffa(@PathVariable Long id) throws SQLException {
         TariffaCorriereRepository.deleteTariffaCorriere(id);
     }
 }// end controller
